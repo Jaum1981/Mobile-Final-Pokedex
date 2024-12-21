@@ -39,7 +39,7 @@ fun HomeScreen(
             TopAppBarMenu(
                 onSettingsClick = onSettingsClick,
                 onHelpClick = onHelpClick,
-                onLogoutClick = {}
+                onLogoutClick = { onLogoutClick() }
             )
         }
     ) { innerPadding ->

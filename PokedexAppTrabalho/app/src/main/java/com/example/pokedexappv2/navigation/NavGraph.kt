@@ -7,10 +7,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.pokedexappv2.models.Pokemon
 import com.example.pokedexappv2.models.pokemonList
 import com.example.pokedexappv2.ui.components.BottomBarScreen
 import com.example.pokedexappv2.ui.components.BottomNavigationBar
@@ -29,6 +34,16 @@ fun NavGraph(
 ) {
     val navController = rememberNavController()
 
+    // Mantenha o estado dos favoritos no NavGraph
+    var favoritesList by remember { mutableStateOf(pokemonList.filter { it.isFavorite }) }
+
+    // Função para resetar os favoritos
+    val resetFavorites: () -> Unit = {
+        favoritesList = emptyList() // Limpa a lista de favoritos
+        // Atualize o estado dos Pokémons na lista original
+        pokemonList.forEach { it.isFavorite = false }
+    }
+
     Scaffold(
         bottomBar = {
             BottomNavigationBar(navController = navController)
@@ -45,9 +60,9 @@ fun NavGraph(
                     onPokemonSelected = { pokemon ->
                         navController.navigate("details/${pokemon.name}")
                     },
-                    onSettingsClick = { navController.navigate("settings") }, // Navegar para Configurações
+                    onSettingsClick = { navController.navigate("settings") },
                     onHelpClick = { navController.navigate("help") },
-                    onLogoutClick = { navController.navigate("logout") } // Navegar para a tela de logout
+                    onLogoutClick = { navController.navigate("logout") }
                 )
             }
 
@@ -59,7 +74,9 @@ fun NavGraph(
                     },
                     onFavoriteToggle = { pokemon ->
                         pokemon.isFavorite = !pokemon.isFavorite
-                    }
+                        favoritesList = pokemonList.filter { it.isFavorite } // Atualize a lista de favoritos
+                    },
+                    resetFavorites = resetFavorites // Passando a função resetFavorites
                 )
             }
 
@@ -72,7 +89,7 @@ fun NavGraph(
 
             // Tela de Configurações
             composable("settings") {
-                SettingsScreen(themeManager = themeManager)
+                SettingsScreen(themeManager = themeManager, resetFavorites = resetFavorites)
             }
 
             // Tela de Suporte/Ajuda
@@ -83,13 +100,12 @@ fun NavGraph(
             // Tela de Logout
             composable("logout") {
                 LogoutScreen(
-                    onCancel = { navController.popBackStack() }, // Voltar à tela anterior
+                    onCancel = { navController.popBackStack() },
                     onConfirm = {
-                        // Lógica de logout: limpa navegação e redireciona à tela inicial
                         navController.navigate(BottomBarScreen.Home.route) {
-                            popUpTo(0) // Remove todas as telas anteriores da pilha
+                            popUpTo(0)
                         }
-                        onLogoutClick() // Executa a lógica de logout
+                        onLogoutClick()
                     }
                 )
             }
