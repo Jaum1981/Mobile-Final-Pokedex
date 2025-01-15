@@ -15,12 +15,8 @@ import com.example.pokedexappv2.ui.components.PokemonListItem
 fun FavoriteScreen(
     pokemonList: List<Pokemon>,
     onPokemonSelected: (Pokemon) -> Unit,
-    onFavoriteToggle: (Pokemon) -> Unit,
-    resetFavorite: () -> Unit
+    onFavoriteToggle: (Pokemon) -> Unit
 ) {
-    // Lista de Pokémon favoritos
-    val favoritePokemon = pokemonList.filter { it.isFavorite }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -34,7 +30,7 @@ fun FavoriteScreen(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            if (favoritePokemon.isEmpty()) {
+            if (pokemonList.isEmpty()) {
                 Text(
                     text = "Nenhum Pokémon favorito encontrado.",
                     modifier = Modifier.padding(16.dp)
@@ -45,7 +41,7 @@ fun FavoriteScreen(
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
                 ) {
-                    items(favoritePokemon) { pokemon ->
+                    items(pokemonList) { pokemon ->
                         PokemonListItem(
                             pokemon = pokemon,
                             onPokemonSelected = { onPokemonSelected(it) },

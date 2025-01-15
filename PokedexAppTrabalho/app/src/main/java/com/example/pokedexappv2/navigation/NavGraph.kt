@@ -83,7 +83,7 @@ fun NavGraph(
             // Tela de Favoritos
             composable(BottomBarScreen.Favorites.route) {
                 FavoriteScreen(
-                    pokemonList = favoritesList, // Passa apenas os favoritos
+                    pokemonList = favoritesList,
                     onPokemonSelected = { pokemon ->
                         navController.navigate("details/${pokemon.name}")
                     },
@@ -91,8 +91,7 @@ fun NavGraph(
                         pokemonList = pokemonList.map {
                             if (it.id == pokemon.id) it.copy(isFavorite = !it.isFavorite) else it
                         }
-                    },
-                    resetFavorite = resetFavorites
+                    }
                 )
             }
 

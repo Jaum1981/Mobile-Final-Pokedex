@@ -31,19 +31,10 @@ fun HomeScreen(
     onFavoriteToggle: (Pokemon) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
-    var pokemonList by remember { mutableStateOf<List<Pokemon>>(emptyList()) }
     val filteredPokemon = remember(searchQuery, pokemonList) {
         pokemonList.filter { it.name.contains(searchQuery, ignoreCase = true) }
     }
     val recentSearches = remember { mutableStateListOf<Pokemon>() }
-    var isLoading by remember { mutableStateOf(true) }
-
-    // Carrega a lista de Pokémon
-    LaunchedEffect(Unit) {
-        isLoading = true
-        pokemonList = fetchPokemonList()
-        isLoading = false
-    }
 
     Scaffold(
         topBar = {
@@ -101,10 +92,7 @@ fun HomeScreen(
                                 onPokemonSelected(selectedPokemon)
                             },
                             onFavoriteToggle = {
-                                val updatedPokemon = pokemon.copy(isFavorite = !pokemon.isFavorite)
-                                pokemonList = pokemonList.map {
-                                    if (it.id == pokemon.id) updatedPokemon else it
-                                }
+                                onFavoriteToggle(pokemon)
                             }
                         )
                     }
