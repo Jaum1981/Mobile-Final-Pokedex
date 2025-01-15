@@ -35,5 +35,5 @@ O projeto segue uma estrutura modular para facilitar a manutenção e escalabili
 
 1. Clone este repositório
    ```bash
-   git clone https://github.com/JoaoVictor/pokedex-app-v2.git
+   git clone https://github.com/Jaum1981/Mobile-Fnal-Pokedex
    ```
