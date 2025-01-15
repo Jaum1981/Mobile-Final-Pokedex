@@ -66,6 +66,16 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     implementation ("androidx.activity:activity-compose:1.7.2")
 
+    //dependencias API pokemon:
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.google.code.gson:gson:2.8.9")
+
+    // Para carregar imagens
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

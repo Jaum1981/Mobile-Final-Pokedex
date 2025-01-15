@@ -5,20 +5,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.pokedexappv2.models.Pokemon
-import com.example.pokedexappv2.models.pokemonList
 import com.example.pokedexappv2.ui.components.PokemonListItem
 
 @ExperimentalMaterial3Api
 @Composable
 fun FavoriteScreen(
+    pokemonList: List<Pokemon>,
     onPokemonSelected: (Pokemon) -> Unit,
     onFavoriteToggle: (Pokemon) -> Unit,
-    resetFavorites: () -> Unit
-
+    resetFavorite: () -> Unit
 ) {
     // Lista de Pokémon favoritos
     val favoritePokemon = pokemonList.filter { it.isFavorite }

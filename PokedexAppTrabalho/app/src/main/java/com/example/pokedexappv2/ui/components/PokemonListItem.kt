@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.example.pokedexappv2.models.Pokemon
 
 @Composable
@@ -37,7 +38,7 @@ fun PokemonListItem(
         {
             Row(verticalAlignment = Alignment.CenterVertically){
                 Image(
-                    painter = painterResource(id = pokemon.imageRes),
+                    painter = rememberAsyncImagePainter(model = pokemon.imageUrl),
                     contentDescription = "${pokemon.name} Image",
                     modifier = Modifier
                         .size(80.dp)
