@@ -74,6 +74,14 @@ dependencies {
     // Para carregar imagens
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    //notificações
+    implementation ("androidx.core:core-ktx:1.10.1")
+
+    //datastore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+
+
 
 
     testImplementation(libs.junit)

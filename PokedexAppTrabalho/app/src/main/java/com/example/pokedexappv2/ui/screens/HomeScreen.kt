@@ -1,5 +1,8 @@
 package com.example.pokedexappv2.ui.screens
 
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,8 +16,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.pokedexappv2.R
 import com.example.pokedexappv2.models.Pokemon
-import com.example.pokedexappv2.models.fetchPokemonList
 import com.example.pokedexappv2.ui.components.PokemonListItem
 import com.example.pokedexappv2.ui.components.TopAppBarMenu
 
@@ -28,7 +33,8 @@ fun HomeScreen(
     onLogoutClick: () -> Unit,
     pokemonList: List<Pokemon>,
     isLoading: Boolean,
-    onFavoriteToggle: (Pokemon) -> Unit
+    onFavoriteToggle: (Pokemon) -> Unit,
+    context: Context // Adicione o contexto aqui
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val filteredPokemon = remember(searchQuery, pokemonList) {
@@ -91,13 +97,49 @@ fun HomeScreen(
                                 }
                                 onPokemonSelected(selectedPokemon)
                             },
-                            onFavoriteToggle = {
+                            onFavoriteToggle = { pokemon ->
+                                if (!pokemon.isFavorite) { // Só envia a notificação quando o Pokémon for favoritado
+                                    sendNotification(context, pokemon.name)
+                                }
                                 onFavoriteToggle(pokemon)
                             }
                         )
                     }
                 }
             }
+        }
+    }
+}
+
+
+//envio
+private fun sendNotification(context: Context, pokemonName: String) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        // Verifica se a permissão foi concedida
+        if (context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            val builder = NotificationCompat.Builder(context, "FAVORITES_CHANNEL")
+                .setSmallIcon(R.drawable.pokemon_simbol)
+                .setContentTitle("Pokémon Favoritado")
+                .setContentText("$pokemonName foi adicionado aos favoritos!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+            with(NotificationManagerCompat.from(context)) {
+                notify(pokemonName.hashCode(), builder.build()) // ID único baseado no nome
+            }
+        } else {
+            // Log ou alternativa caso a permissão não seja concedida
+            println("Permissão para enviar notificações não concedida.")
+        }
+    } else {
+        // Para versões anteriores a Android 13, não é necessário verificar permissão
+        val builder = NotificationCompat.Builder(context, "FAVORITES_CHANNEL")
+            .setSmallIcon(R.drawable.pokemon_simbol)
+            .setContentTitle("Pokémon Favoritado")
+            .setContentText("$pokemonName foi adicionado aos favoritos!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(context)) {
+            notify(pokemonName.hashCode(), builder.build()) // ID único baseado no nome
         }
     }
 }

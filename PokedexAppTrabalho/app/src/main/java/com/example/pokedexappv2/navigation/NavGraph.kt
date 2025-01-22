@@ -1,7 +1,6 @@
 package com.example.pokedexappv2.navigation
 
 import HelpScreen
-import SettingsScreen
 import ThemeManager
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
@@ -20,6 +19,7 @@ import com.example.pokedexappv2.ui.screens.HomeScreen
 import com.example.pokedexappv2.ui.screens.FavoriteScreen
 import com.example.pokedexappv2.ui.screens.DetailsScreen
 import com.example.pokedexappv2.ui.screens.LogoutScreen
+import com.example.pokedexappv2.ui.screens.SettingsScreen
 
 @SuppressLint("UnrememberedMutableState")
 @ExperimentalMaterial3Api
@@ -76,7 +76,8 @@ fun NavGraph(
                         pokemonList = pokemonList.map {
                             if (it.id == pokemon.id) it.copy(isFavorite = !it.isFavorite) else it
                         }
-                    }
+                    },
+                    context = navController.context
                 )
             }
 
@@ -104,7 +105,7 @@ fun NavGraph(
 
             // Tela de Configurações
             composable("settings") {
-                SettingsScreen(themeManager = themeManager, resetFavorites = resetFavorites)
+                SettingsScreen(themeManager = themeManager, resetFavorites = resetFavorites, context = navController.context)
             }
 
             // Tela de Suporte/Ajuda
