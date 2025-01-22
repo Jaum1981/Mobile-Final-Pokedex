@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.pokedexappv2.models.Pokemon
+import com.example.pokedexappv2.ui.components.PokemonFavoriteListItem
 import com.example.pokedexappv2.ui.components.PokemonListItem
 
 @ExperimentalMaterial3Api
@@ -42,7 +43,7 @@ fun FavoriteScreen(
                         .padding(horizontal = 8.dp)
                 ) {
                     items(pokemonList) { pokemon ->
-                        PokemonListItem(
+                        PokemonFavoriteListItem(
                             pokemon = pokemon,
                             onPokemonSelected = { onPokemonSelected(it) },
                             onFavoriteToggle = { onFavoriteToggle(it) }
