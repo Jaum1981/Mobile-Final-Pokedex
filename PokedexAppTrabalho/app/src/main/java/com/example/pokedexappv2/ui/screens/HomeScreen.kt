@@ -19,9 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.pokedexappv2.R
+import com.example.pokedexappv2.data.DataStoreUtils
 import com.example.pokedexappv2.models.Pokemon
 import com.example.pokedexappv2.ui.components.PokemonListItem
 import com.example.pokedexappv2.ui.components.TopAppBarMenu
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @RequiresApi(35)
 @ExperimentalMaterial3Api
@@ -99,7 +104,11 @@ fun HomeScreen(
                             },
                             onFavoriteToggle = { pokemon ->
                                 if (!pokemon.isFavorite) { // Só envia a notificação quando o Pokémon for favoritado
-                                    sendNotification(context, pokemon.name)
+                                    CoroutineScope(Dispatchers.Main).launch {
+                                        if(DataStoreUtils.areNotificationsEnabled(context).first()) {
+                                            sendNotification(context, pokemon.name)
+                                        }
+                                    }
                                 }
                                 onFavoriteToggle(pokemon)
                             }
