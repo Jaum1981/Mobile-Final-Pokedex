@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.pokedexappv2.models.Pokemon
 
+
 @Composable
 fun PokemonListItem(
     pokemon: Pokemon,
