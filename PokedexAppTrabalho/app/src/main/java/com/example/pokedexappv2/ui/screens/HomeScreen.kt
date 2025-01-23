@@ -22,7 +22,7 @@ import com.example.pokedexappv2.R
 import com.example.pokedexappv2.data.DataStoreUtils
 import com.example.pokedexappv2.models.Pokemon
 import com.example.pokedexappv2.ui.components.PokemonListItem
-import com.example.pokedexappv2.ui.components.TopAppBarMenu
+import com.example.pokedexappv2.ui.components.TopAppBarWithMenu
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -49,7 +49,7 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            TopAppBarMenu(
+            TopAppBarWithMenu(
                 onSettingsClick = onSettingsClick,
                 onHelpClick = onHelpClick,
                 onLogoutClick = { onLogoutClick() }
