@@ -2,7 +2,7 @@
 
 ## Sobre o Projeto
 
-O **Pokedex App V2** é um aplicativo mobile desenvolvido na disciplina **Desenvolvimento Mobile 2024.2**. O aplicativo utiliza o **Jetpack Compose** para criação de interfaces modernas e responsivas, permitindo ao usuário visualizar, pesquisar e gerenciar uma lista de Pokémon da primeira geração, incluindo a funcionalidade de favoritar os Pokémon de sua escolha.
+O **Pokedex App** é um aplicativo mobile desenvolvido na disciplina **Desenvolvimento Mobile 2024.2**. O aplicativo utiliza o **Jetpack Compose** para criação de interfaces modernas e responsivas, permitindo ao usuário visualizar, pesquisar e gerenciar uma lista de Pokémon da primeira geração, incluindo a funcionalidade de favoritar os Pokémon de sua escolha.
 
 ## Funcionalidades
 
