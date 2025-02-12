@@ -78,7 +78,14 @@ fun DetailsScreen(pokemon: Pokemon) {
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter(pokemon.imageUrl),
+                    painter = rememberAsyncImagePainter(
+                        model = pokemon.imageUrl,
+                        imageLoader = coil.ImageLoader(context).newBuilder()
+                            .components {
+                                add(coil.decode.ImageDecoderDecoder.Factory()) // Suporte para GIFs
+                            }
+                            .build()
+                    ),
                     contentDescription = "${pokemon.name} image",
                     modifier = Modifier.fillMaxSize()
                 )
@@ -185,21 +192,6 @@ fun getPokemonSoundResource(pokemonId: Int): Int {
         4 -> R.raw.charmander_sound  // Som do Charmander
         150 -> R.raw.mewtwo_sound  // Som do Mewtwo
 
-        //adicionarei mais tarde(muito dificil de achar os sons e não existe nenhum api pra isso ;-;)
-
-//        778 -> R.raw.mimikyu_sound  // Som do Mimikyu
-//        245 -> R.raw.suicune_sound  // Som do Suicune
-//        282 -> R.raw.gardevoir_sound  // Som do Gardevoir
-//        131 -> R.raw.lapras_sound  // Som do Lapras
-//        196 -> R.raw.espeon_sound  // Som do Espeon
-//        197 -> R.raw.umbreon_sound  // Som do Umbreon
-//        448 -> R.raw.togekiss_sound  // Som do Togekiss
-//        143 -> R.raw.metagross_sound  // Som do Metagross
-//        359 -> R.raw.absol_sound  // Som do Absol
-//        151 -> R.raw.mew_sound  // Som do Mew
-//        212 -> R.raw.scizor_sound  // Som do Scizor
-//        373 -> R.raw.salamence_sound  // Som do Salamence
-//        250 -> R.raw.hooh_sound  // Som do Ho-Oh
         else -> R.raw.default_pokemon_sound  // Som padrão
     }
 }

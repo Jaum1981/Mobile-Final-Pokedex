@@ -51,7 +51,9 @@ suspend fun fetchPokemonList(): List<Pokemon> {
                         weight = "${response.weight / 10.0} kg",
                         height = "${response.height / 10.0} m",
                         description = "Dados fornecidos pela PokéAPI.",
-                        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${response.id}.png"
+//                      imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${response.id}.png"
+                        imageUrl = "https://raw.githubusercontent.com/wellrccity/pokedex-html-js/master/assets/img/pokemons/poke_${response.id}.gif"
+
                     )
                 )
             } catch (e: Exception) {
