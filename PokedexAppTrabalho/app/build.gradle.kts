@@ -73,6 +73,7 @@ dependencies {
 
     // Para carregar imagens
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-gif:2.4.0")
 
     //notificações
     implementation ("androidx.core:core-ktx:1.10.1")
