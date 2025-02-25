@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
+    id("org.jetbrains.compose")
 }
 
 android {
@@ -9,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.pokedexappv2"
-        minSdk = 33
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -40,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -82,7 +84,17 @@ dependencies {
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-messaging-ktx:24.1.0")
 
+
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // Google Sign-In (Para Social Login com Google)
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
 
     testImplementation(libs.junit)

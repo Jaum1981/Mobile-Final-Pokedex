@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.pokedexappv2" />
+                  <option name="mobileSdkAppId" value="1:1042757728116:android:66d7b12ee2ca5fe001de21" />
+                  <option name="projectId" value="pokedexmobile-9916e" />
+                  <option name="projectNumber" value="1042757728116" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
