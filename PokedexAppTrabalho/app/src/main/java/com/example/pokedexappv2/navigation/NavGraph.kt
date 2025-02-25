@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.pokedexappv2.models.Pokemon
 import com.example.pokedexappv2.models.fetchPokemonList
@@ -18,8 +19,12 @@ import com.example.pokedexappv2.ui.components.BottomNavigationBar
 import com.example.pokedexappv2.ui.screens.HomeScreen
 import com.example.pokedexappv2.ui.screens.FavoriteScreen
 import com.example.pokedexappv2.ui.screens.DetailsScreen
+import com.example.pokedexappv2.ui.screens.ForgotPasswordScreen
+import com.example.pokedexappv2.ui.screens.LoginScreen
 import com.example.pokedexappv2.ui.screens.LogoutScreen
+import com.example.pokedexappv2.ui.screens.RegisterScreen
 import com.example.pokedexappv2.ui.screens.SettingsScreen
+import com.example.pokedexappv2.viewmodel.AuthViewModel
 
 @SuppressLint("UnrememberedMutableState")
 @ExperimentalMaterial3Api
@@ -28,39 +33,58 @@ fun NavGraph(
     onSettingsClick: () -> Unit,
     onHelpClick: () -> Unit,
     onLogoutClick: () -> Unit,
-    themeManager: ThemeManager
+    themeManager: ThemeManager,
+    authViewModel: AuthViewModel
 ) {
     val navController = rememberNavController()
 
-    // Estado principal da lista de Pokémon
     var pokemonList by remember { mutableStateOf<List<Pokemon>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
 
-    // Carrega a lista de Pokémon ao iniciar o NavGraph
     LaunchedEffect(Unit) {
         isLoading = true
         pokemonList = fetchPokemonList()
         isLoading = false
     }
 
-    // Atualiza a lista de favoritos dinamicamente
     val favoritesList by derivedStateOf { pokemonList.filter { it.isFavorite } }
 
-    // Função para resetar os favoritos
     val resetFavorites: () -> Unit = {
         pokemonList = pokemonList.map { it.copy(isFavorite = false) }
     }
 
+    // Obtendo a rota atual para condicionar a BottomNavigationBar
+    val currentDestination by navController.currentBackStackEntryAsState()
+    val hideBottomBarRoutes = listOf("login", "register", "forgot_password")
+    val shouldShowBottomBar = currentDestination?.destination?.route !in hideBottomBarRoutes
+
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            if (shouldShowBottomBar) {
+                BottomNavigationBar(navController = navController)
+            }
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = BottomBarScreen.Home.route,
+            startDestination = "login", // Define a tela inicial como login
             modifier = Modifier.padding(innerPadding)
         ) {
+            // Tela de Login
+            composable("login") {
+                LoginScreen(viewModel = authViewModel, navController = navController)
+            }
+
+            // Tela de Registro
+            composable("register") {
+                RegisterScreen(viewModel = authViewModel, navController = navController)
+            }
+
+            // Tela de Recuperação de Senha
+            composable("forgot_password") {
+                ForgotPasswordScreen(viewModel = authViewModel, navController = navController)
+            }
+
             // Tela Inicial (Home)
             composable(BottomBarScreen.Home.route) {
                 HomeScreen(
