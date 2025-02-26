@@ -142,8 +142,8 @@ fun NavGraph(
                 LogoutScreen(
                     onCancel = { navController.popBackStack() },
                     onConfirm = {
-                        navController.navigate(BottomBarScreen.Home.route) {
-                            popUpTo(0)
+                        navController.navigate("login") {
+                            popUpTo("login") { inclusive = true }
                         }
                         onLogoutClick()
                     }
